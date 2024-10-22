@@ -1,7 +1,7 @@
 const cartas_container = document.getElementById('cartas-container');
 
 const cartas_arquivos = {
-    'Cone de trânsito'          : 'cartas/cone_de_transito.svg',
+    'Cone de trânsito'          : 'cartas/cone_de_transito.svg',.
     'Faixa de segurança'        : 'cartas/faixa_de_seguranca.svg',
     'Limite de velocidade'      : 'cartas/limite_de_velocidade.svg',
     'Pare'                      : 'cartas/pare.svg',
@@ -11,26 +11,6 @@ const cartas_arquivos = {
     'Sinal verde'               : 'cartas/sinal_verde.svg',
     'Sinal vermelho'            : 'cartas/sinal_vermelho.svg',    
     'Passagem de nível'         : 'cartas/trilho_de_trem.svg',
-    '1Cone de trânsito'          : 'cartas/cone_de_transito.svg',
-    '1Faixa de segurança'        : 'cartas/faixa_de_seguranca.svg',
-    '1Limite de velocidade'      : 'cartas/limite_de_velocidade.svg',
-    '1Pare'                      : 'cartas/pare.svg',
-    '1Proibido estacionar'       : 'cartas/proibido_estacionar.svg',
-    '1Proibido ultrapassagem'    : 'cartas/proibido_ultrapassagem.svg',
-    '1Semáforo'                  : 'cartas/semaforo.svg',
-    '1Sinal verde'               : 'cartas/sinal_verde.svg',
-    '1Sinal vermelho'            : 'cartas/sinal_vermelho.svg',    
-    '1Passagem de nível'         : 'cartas/trilho_de_trem.svg',
-    '2Cone de trânsito'          : 'cartas/cone_de_transito.svg',
-    '2Faixa de segurança'        : 'cartas/faixa_de_seguranca.svg',
-    '2Limite de velocidade'      : 'cartas/limite_de_velocidade.svg',
-    '2Pare'                      : 'cartas/pare.svg',
-    '2Proibido estacionar'       : 'cartas/proibido_estacionar.svg',
-    '2Proibido ultrapassagem'    : 'cartas/proibido_ultrapassagem.svg',
-    '2Semáforo'                  : 'cartas/semaforo.svg',
-    '2Sinal verde'               : 'cartas/sinal_verde.svg',
-    '2Sinal vermelho'            : 'cartas/sinal_vermelho.svg',    
-    '2Passagem de nível'         : 'cartas/trilho_de_trem.svg'
 }
 
 const tamanho_do_deck = Object.getOwnPropertyNames(cartas_arquivos).length;
