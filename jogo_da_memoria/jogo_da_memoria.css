@@ -1,0 +1,140 @@
+:root{
+    --carta-cor: #8080801f;
+    --largura: 200px; /* largura da div */
+    --altura: 150px;  /* altura da div */
+    --quantidade: 0;
+}
+
+main {
+    margin: auto;
+    overflow: hidden;
+}
+
+#cartas-container{
+    width: 90%;
+    height: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(calc(10vh), 1fr));
+    position: absolute;
+}
+/* 
+@media (min-width: 300px) {
+    #cartas-container{
+        grid-template-columns: repeat(calc(1.5 * var(--quantidade) / 10), 1fr);
+    }
+}
+
+@media (min-width: 400px) {
+    #cartas-container{
+        grid-template-columns: repeat(calc(2 * var(--quantidade) / 10), 1fr);
+    }
+}
+
+@media (min-width: 600px) {
+    #cartas-container{
+        grid-template-columns: repeat(calc(2.5 * var(--quantidade) / 10), 1fr);
+    }
+}
+
+@media (min-width: 1200px) {
+    #cartas-container{
+        width: auto;
+    }
+} */
+
+.carta{
+    justify-content: center;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
+    background-color: var(--carta-cor);
+    box-shadow: 0px 2px 5px;
+    font-size: .8em;
+}
+
+.carta img{
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    pointer-events: none;
+}
+
+.carta p{
+    line-break: auto;
+    text-align: center;
+    font-stretch: expanded;
+
+    pointer-events: none;
+    object-fit: contain;
+}
+
+.carta-baixo{
+    animation: 1s girar-carta-baixo;
+}
+
+.carta-baixo > *{
+    animation: 1s carta-ocultar-conteudo;
+}
+
+.carta-cima{
+    animation: 1s girar-carta-cima;
+}
+
+.carta-cima > *{
+    animation: 1s carta-mostrar-conteudo;
+}
+
+.popup {
+    position: absolute;
+    display: none; /* Esconde o pop-up por padrão */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-conteudo {
+    position: absolute;
+    top: 50%; /* Centraliza verticalmente */
+    left: 50%; /* Centraliza horizontalmente */
+    min-width: 20%;
+    transform: translate(-50%, -50%); /* Ajusta a posição para o centro */
+    background-color: rgb(255, 255, 255);
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000; /* Garante que o pop-up fique acima de outros elementos */
+}
+
+
+@keyframes girar-carta-cima {
+    to {
+        transform: rotateY(180deg) scaleX(-1);
+    }
+}
+@keyframes girar-carta-baixo {
+    to {
+        transform: rotateY(180deg) scaleX(-1);
+    }
+}
+@keyframes carta-ocultar-conteudo {
+    from{
+        display: block;
+    }
+    25%, to {
+        display: none;
+    }
+}
+@keyframes carta-mostrar-conteudo {
+    from, 25%{
+        display: none;
+    }
+    to {
+        display: block;
+    }
+}

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="jogo_da_memoria.css">
+    <title>Jogo da Memoria</title>
+</head>
+<body>
+    <main>
+        <button id="reiniciar">Reiniciar <br> ⟳</button>
+        <button id="iniciar">Iniciar <br> ▶ </button>
+        <button onclick="jogoDaMemoria.vitoria()">Mostrar  <br> Pop-up</button>
+        <div id="cartas-container">
+            <div id="popup" class="popup">
+                <div class="popup-conteudo">
+                    <h2>Vitória!</h2>
+                    <p>Você ganhou!</p>
+                    <button onclick="jogoDaMemoria.fecharPopup()">Fechar</button>
+                </div>
+            </div>
+        </div>
+        <script src="jogo_da_memoria.js"></script>
+        <script>
+            jogoDaMemoria = new JogoDaMemoria(30);
+        </script>
+    </main>
+</body>
+</html>
