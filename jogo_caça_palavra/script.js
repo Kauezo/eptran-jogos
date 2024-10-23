@@ -141,31 +141,45 @@ function placeWords(words) {
     renderWordList();
 }
 
-function renderGrid() {
-    const table = document.getElementById('crossword');
-    table.innerHTML = '';
-    
-    table.removeEventListener('mousedown', handleMouseDown);
-    document.removeEventListener('mouseup', handleMouseUp);
-    table.removeEventListener('mouseover', handleMouseOver);
-    
-    table.addEventListener('mousedown', handleMouseDown);
-    document.addEventListener('mouseup', handleMouseUp);
-    table.addEventListener('mouseover', handleMouseOver);
-    table.addEventListener('selectstart', (e) => e.preventDefault());
-
-    for (let i = 0; i < 13; i++) {
-        let row = document.createElement('tr');
-        for (let j = 0; j < 13; j++) {
-            let cell = document.createElement('td');
-            cell.textContent = grid[i][j];
-            cell.dataset.row = i;
-            cell.dataset.col = j;
-            row.appendChild(cell);
-        }
-        table.appendChild(row);
+// Funções para lidar com o toque
+function handleTouchStart(event) {
+    const cell = event.target;
+    if (cell.tagName === 'TD') {
+        isSelecting = true;
+        startCell = cell;
+        clearSelection();
+        highlightCell(cell);
+        updateSelection();
     }
 }
+
+function handleTouchMove(event) {
+    const cell = event.target;
+    if (isSelecting && cell.tagName === 'TD') {
+        currentCell = cell;
+        updateSelection();
+    }
+}
+
+function handleTouchEnd(event) {
+    if (isSelecting) {
+        isSelecting = false;
+        checkSelection();
+        if (!isWordFound()) {
+            clearSelection();
+        }
+    }
+}
+
+// Função para lidar com seleção de palavras
+function handleSelection(event) {
+    const cell = event.target;
+    if (cell.tagName === 'TD') {
+        cell.classList.toggle('selected');
+        // Aqui pode ser adicionado mais lógica, se necessário
+    }
+}
+
 
 function handleMouseDown(event) {
     if (event.target.tagName === 'TD') {
@@ -179,18 +193,26 @@ function handleMouseDown(event) {
 function handleMouseUp(event) {
     if (isSelecting) {
         isSelecting = false;
-        checkSelection();
-        if (!isWordFound()) {
-            clearSelection();
-        }
+        
     }
 }
 
 function handleMouseOver(event) {
     if (isSelecting && event.target.tagName === 'TD') {
         currentCell = event.target;
-        updateSelection();
+        updateSelection(); // Atualiza a seleção enquanto o mouse está movendo
     }
+}
+
+document.querySelectorAll('#crossword td').forEach(function(cell) {
+    cell.addEventListener('click', handleSelection);
+    cell.addEventListener('touchstart', handleSelection); // Adiciona evento de toque
+});
+
+function handleSelection(event) {
+    // Aqui vai a lógica para selecionar as palavras
+    const cell = event.target;
+    cell.classList.toggle('selected');
 }
 
 function updateSelection() {
@@ -208,7 +230,7 @@ function updateSelection() {
 
     const rowDiff = endRow - startRow;
     const colDiff = endCol - startCol;
-    
+
     if (Math.abs(rowDiff) === Math.abs(colDiff) || rowDiff === 0 || colDiff === 0) {
         const steps = Math.max(Math.abs(rowDiff), Math.abs(colDiff));
         const rowStep = steps === 0 ? 0 : rowDiff / steps;
@@ -225,7 +247,6 @@ function updateSelection() {
         }
     }
 }
-
 
 function getSelectedWord() {
     const cells = Array.from(lastHighlightedCells);
@@ -344,13 +365,111 @@ document.addEventListener('DOMContentLoaded', () => {
 
     instructionsButton.textContent = "Instruções";
 
+    // Removendo event listeners antigos
     startGameButton.removeEventListener('click', showGameScreen);
     instructionsButton.removeEventListener('click', showInstructionsScreen);
     backToMenuButton.removeEventListener('click', showInitialScreen);
     voltarButton.removeEventListener('click', showInitialScreen);
 
+    // Adicionando novos event listeners
     startGameButton.addEventListener('click', showGameScreen);
     instructionsButton.addEventListener('click', showInstructionsScreen);
     backToMenuButton.addEventListener('click', showInitialScreen);
     voltarButton.addEventListener('click', showInitialScreen);
 });
+
+// Lidar com seleção de palavras ao tocar nas células
+function handleSelection(event) {
+    const cell = event.target;
+    if (cell.tagName === 'TD') { // Garante que o toque é em uma célula
+        cell.classList.toggle('selected');
+        // Aqui pode ser adicionado mais lógica, se necessário
+    }
+}
+
+function handleMouseDown(event) {
+    if (event.target.tagName === 'TD') {
+        isSelecting = true;
+        startCell = event.target;
+        clearSelection();
+        highlightCell(event.target);
+        updateSelection();
+    }
+}
+
+function handleTouchStart(event) {
+    if (event.target.tagName === 'TD') {
+        isSelecting = true;
+        startCell = event.target;
+        clearSelection();
+        highlightCell(event.target);
+    }
+}
+
+function handleMouseUp(event) {
+    if (isSelecting) {
+        isSelecting = false;
+        checkSelection();
+        if (!isWordFound()) {
+            clearSelection();
+        }
+    }
+}
+
+function handleTouchEnd(event) {
+    if (isSelecting) {
+        isSelecting = false;
+       
+
+    }
+}
+
+function handleMouseOver(event) {
+    if (isSelecting && event.target.tagName === 'TD') {
+        currentCell = event.target;
+        updateSelection();
+    }
+}
+
+function handleTouchMove(event) {
+    if (isSelecting && event.target.tagName === 'TD') {
+        currentCell = event.target;
+        updateSelection();
+    }
+}
+
+// Ao renderizar a grade
+function renderGrid() {
+    const table = document.getElementById('crossword');
+    table.innerHTML = '';
+
+    // Remover os eventos antigos
+    table.removeEventListener('mousedown', handleMouseDown);
+    table.removeEventListener('touchstart', handleTouchStart);
+    document.removeEventListener('mouseup', handleMouseUp);
+    document.removeEventListener('touchend', handleTouchEnd);
+    table.removeEventListener('mouseover', handleMouseOver);
+    document.removeEventListener('touchmove', handleTouchMove);
+
+    // Adicionar novos eventos
+    table.addEventListener('mousedown', handleMouseDown);
+    table.addEventListener('touchstart', handleTouchStart);
+    document.addEventListener('mouseup', handleMouseUp);
+    document.addEventListener('touchend', handleTouchEnd);
+    table.addEventListener('mouseover', handleMouseOver);
+    document.addEventListener('touchmove', handleTouchMove);
+    table.addEventListener('selectstart', (e) => e.preventDefault());
+
+    // Adiciona as células à tabela
+    for (let i = 0; i < 13; i++) {
+        let row = document.createElement('tr');
+        for (let j = 0; j < 13; j++) {
+            let cell = document.createElement('td');
+            cell.textContent = grid[i][j];
+            cell.dataset.row = i;
+            cell.dataset.col = j;
+            row.appendChild(cell);
+        }
+        table.appendChild(row);
+    }
+}
