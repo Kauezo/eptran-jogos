@@ -4,6 +4,7 @@
     box-sizing: border-box;
 } */
 
+
 body {
     background-image: url('PapelParede.png');
     background-position: center;
@@ -17,9 +18,13 @@ body {
 }
 
 
+
+
 body {
     font-size: 16px;
 }
+
+
 
 
 @media (max-width: 768px) {
@@ -29,46 +34,56 @@ body {
         gap: 20px;
     }
 
+
     #crossword td {
         width: 30px;
         height: 30px;
         font-size: 16px;
     }
 
+
     button {
         padding: 8px 16px;
         font-size: 14px;
     }
+
 
     .word-list-container {
         /* width: 100%; */
         padding: 15px;
     }
 
+
     #word-list li {
         font-size: 14px;
     }
+
 
     .game-header h1 {
         font-size: 24px;
     }
 
+
     .message {
         font-size: 16px;
     }
+
 
     .instructions-container {
         width: 100%;
         padding: 20px;
     }
 
+
     .instructions-content p,
     .instructions-content li {
         font-size: 14px;
     }
 
-    
+
+   
 }
+
 
 @media (max-width: 400px) {
     #crossword td {
@@ -77,15 +92,20 @@ body {
         font-size: 14px;
     }
 
+
     #titulo {
         font-size: 20px;
     }
+
 
     button {
         padding: 6px 12px;
         font-size: 12px;
     }
 }
+
+
+
 
 
 
@@ -100,6 +120,7 @@ body::before {
     z-index: -1;
 }
 
+
 #initial-screen {
     display: flex;
     flex-direction: column;
@@ -109,11 +130,13 @@ body::before {
     color: white;
 }
 
+
 #game-screen {
     padding: 20px;
     width: 100%;
     box-sizing: border-box;
 }
+
 
 .game-header {
     text-align: center;
@@ -121,6 +144,7 @@ body::before {
     /* position: relative; */
     color: white;
 }
+
 
 .main-container {
     display: flex;
@@ -131,15 +155,18 @@ body::before {
     max-width: 1200px;
 }
 
+
 .grid-container {
     flex: 0 0 auto;
 }
+
 
 #crossword {
     border-collapse: collapse;
     background: white;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
+
 
 #crossword td {
     width: 40px;
@@ -151,17 +178,21 @@ body::before {
     user-select: none;
 }
 
+
 td.selected {
     background-color: #b3e0ff;
 }
 
+
 .selected {
-    background-color: yellow; /* Cor de destaque */
+    background-color: yellow;
 }
+
 
 td.found {
     background-color: #90EE90;
 }
+
 
 .word-list-container {
     flex: 0 0 300px;
@@ -171,17 +202,20 @@ td.found {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
+
 .word-list-container h2 {
     margin-top: 0;
     margin-bottom: 15px;
     color: #333;
 }
 
+
 #word-list {
     list-style: none;
     padding: 0;
     margin: 0;
 }
+
 
 #instructions-screen {
     display: flex;
@@ -192,6 +226,7 @@ td.found {
     padding: 20px;
 }
 
+
 .instructions-container {
     background: rgba(255, 255, 255, 0.9);
     padding: 30px;
@@ -201,9 +236,11 @@ td.found {
     width: 90%;
 }
 
+
 .instructions-content {
     margin: 20px 0;
 }
+
 
 .instructions-content p {
     margin: 10px 0;
@@ -211,22 +248,26 @@ td.found {
     line-height: 1.5;
 }
 
+
 .instructions-content ul {
     list-style-type: none;
     padding-left: 20px;
     margin: 10px 0;
 }
 
+
 .instructions-content li {
     margin: 5px 0;
     font-size: 16px;
 }
+
 
 h2 {
     color: #333;
     text-align: center;
     margin-bottom: 20px;
 }
+
 
 #word-list li {
     padding: 8px 12px;
@@ -236,11 +277,13 @@ h2 {
     font-size: 16px;
 }
 
+
 #word-list li.found-word {
     text-decoration: line-through;
     color: #666;
     background: #e0e0e0;
 }
+
 
 .message {
     text-align: center;
@@ -253,6 +296,7 @@ h2 {
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
+
 #voltar {
     position: absolute;
     top: 10px;
@@ -262,10 +306,12 @@ h2 {
     cursor: pointer;
 }
 
+
 #voltar img {
     width: 30px;
     height: auto;
 }
+
 
 #reiniciar {
     position: absolute;
@@ -277,23 +323,28 @@ h2 {
     padding: 0;
 }
 
+
 #reiniciar img {
     width: 24px;
     background: none;
     height: auto;
 }
 
+
 #reiniciar:hover img {
     width: 28px;
 }
+
 
 #reiniciar:active img {
     width: 22px;
 }
 
+
 .hidden {
     display: none !important;
 }
+
 
 button {
     padding: 10px 20px;
@@ -306,11 +357,10 @@ button {
     border-radius: 4px;
 }
 
+
 button:hover {
     background: #45a049;
 }
-
-
 .bt1{
     width: 200px;
     height: 70px;
