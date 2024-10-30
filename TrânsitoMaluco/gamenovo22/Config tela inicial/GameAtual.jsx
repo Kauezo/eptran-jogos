@@ -64,7 +64,7 @@ function createCactus() {
         let cactus = document.createElement("div");
         cactus.classList.add("cactus");
         cactus.style.width = "100px";
-        cactus.style.height = "190px";
+        cactus.style.height = "205px";
 
         let randomImageIndex = Math.floor(Math.random() * cactusImages.length);
         cactus.style.backgroundImage = `url('${cactusImages[randomImageIndex]}')`;
@@ -86,7 +86,6 @@ const cactusImages = [
     '../Carro3.png',
     '../Carro4.png',
     '../Carro5.png',
-    '../Carro6.png',
     '../Carro7.png',
     '../Carro9.png',
     '../Carro10.png',
@@ -94,8 +93,6 @@ const cactusImages = [
     '../Carro12.png',
     '../Carro14.png',
     '../Carro15.png',
-    '../Carro16.png',
-    '../Carro17.png',
     '../f1bebe.png',
     '../f1branca.png',
     '../f1laranjaa.png',

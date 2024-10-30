@@ -90,3 +90,17 @@ h1 {
     background-color:goldenrod;
 } */
 
+
+.arrow-container {
+    position: fixed;
+    bottom: 20px; /* Ajuste a posição vertical conforme necessário */
+    right: 180px; /* Ajuste a posição horizontal conforme necessário */
+    display: flex;
+    gap: 40px; /* Espaçamento entre as flechas */
+}
+
+.arrow {
+    width: 90px; /* Ajuste o tamanho da flecha conforme necessário */
+    height: auto; /* Mantém a proporção da imagem */
+}
+
