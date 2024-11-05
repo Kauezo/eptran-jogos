@@ -2,33 +2,17 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style2.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="jogo_da_memoria.css">
     <title>Jogo da Memória</title>
 </head>
 
+
 <body>
-    <!-- Tela Inicial -->
-    <main id="tela-inicial">
-        <h1>Bem-vindo ao Jogo da Memória</h1>
-        <p>Teste sua memória e encontre os pares de imagens e palavras.</p>
-        <button id="comecar-jogo">Começar Jogo ▶</button>
-        <button id="instrucoes-btn">Instruções</button>
-    </main>
-
-    <!-- Tela de Instruções -->
-    <main id="tela-instrucoes" style="display: none;">
-        <h1>Instruções do Jogo</h1>
-        <p>
-            O objetivo do jogo é encontrar todos os pares de cartas correspondentes.<br>
-            Clique em duas cartas para virá-las. Se elas formarem um par permanecerão viradas. <br>
-            Caso contrário elas virarão de volta, e você poderá tentar novamente.<br>
-        </p>
-        <button id="voltar-inicial">Voltar à Tela Inicial ⬅️</button>
-    </main>
-
-    <!-- Tela do Jogo -->
-    <main id="jogo-container" style="display: none;">
+    <main>
+        <h1>JOGO DA MEMÓRIA</h1>
         <div id="cartas-container">
             <div id="popup" class="popup">
                 <div class="popup-conteudo">
@@ -40,43 +24,10 @@
         </div>
         <button id="iniciar">Iniciar ▶</button>
         <button id="reiniciar">Reiniciar ⟳</button>
-        <button id="voltar">Voltar à Tela Inicial ⬅️</button>
     </main>
-
-    <script src="js.js"></script>
+    <script src="jogo_da_memoria.js"></script>
     <script>
-        const jogoDaMemoria = new JogoDaMemoria(10);
-
-        // Função para ocultar todas as telas
-        function ocultarTelas() {
-            document.getElementById('tela-inicial').style.display = 'none';
-            document.getElementById('tela-instrucoes').style.display = 'none';
-            document.getElementById('jogo-container').style.display = 'none';
-        }
-
-        // Mostrar o jogo e ocultar outras telas
-        document.getElementById("comecar-jogo").addEventListener('click', () => {
-            ocultarTelas();
-            document.getElementById('jogo-container').style.display = 'flex';
-        });
-
-        // Voltar à tela inicial a partir do jogo
-        document.getElementById("voltar").addEventListener('click', () => {
-            ocultarTelas();
-            document.getElementById('tela-inicial').style.display = 'flex';
-        });
-
-        // Mostrar as instruções e ocultar outras telas
-        document.getElementById("instrucoes-btn").addEventListener('click', () => {
-            ocultarTelas();
-            document.getElementById('tela-instrucoes').style.display = 'flex';
-        });
-
-        // Voltar da tela de instruções para a tela inicial
-        document.getElementById("voltar-inicial").addEventListener('click', () => {
-            ocultarTelas();
-            document.getElementById('tela-inicial').style.display = 'flex';
-        });
+        jogoDaMemoria = new JogoDaMemoria(10);
     </script>
 </body>
 </html>
