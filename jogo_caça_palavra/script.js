@@ -42,9 +42,14 @@ function initializeGame() {
     startCell = null;
     currentCell = null;
    
+    // Reset message when initializing game
+    updateMessage("Selecione as palavras na grade!");
+   
     words = getRandomWords(allWords, 8);
     placeWords(words);
 }
+
+
 
 
 function getOffsets(direction) {
@@ -62,9 +67,13 @@ function getOffsets(direction) {
 }
 
 
+
+
 function canPlaceWord(word, startRow, startCol, direction) {
     const [rowOffset, colOffset] = getOffsets(direction);
     const wordLength = word.length;
+
+
 
 
     if (
@@ -75,6 +84,8 @@ function canPlaceWord(word, startRow, startCol, direction) {
     ) {
         return false;
     }
+
+
 
 
     for (let i = 0; i < wordLength; i++) {
@@ -88,8 +99,12 @@ function canPlaceWord(word, startRow, startCol, direction) {
     }
 
 
+
+
     return true;
 }
+
+
 
 
 function placeWord(word, startRow, startCol, direction) {
@@ -101,6 +116,8 @@ function placeWord(word, startRow, startCol, direction) {
         grid[row][col] = word[i];
     }
 }
+
+
 
 
 function fillEmptySpaces() {
@@ -117,6 +134,8 @@ function fillEmptySpaces() {
 }
 
 
+
+
 function renderWordList() {
     const wordList = document.getElementById('word-list');
     wordList.innerHTML = '';
@@ -131,6 +150,8 @@ function renderWordList() {
 }
 
 
+
+
 function placeWords(words) {
     words.forEach(word => {
         let placed = false;
@@ -138,6 +159,8 @@ function placeWords(words) {
             let row = Math.floor(Math.random() * 13);
             let col = Math.floor(Math.random() * 13);
             let direction = Math.floor(Math.random() * 8);
+
+
 
 
             if (canPlaceWord(word, row, col, direction)) {
@@ -152,6 +175,8 @@ function placeWords(words) {
 }
 
 
+
+
 function handleTouchStart(event) {
     event.preventDefault();
     if (event.target.tagName === 'TD') {
@@ -163,6 +188,8 @@ function handleTouchStart(event) {
         updateSelection();
     }
 }
+
+
 
 
 function handleTouchMove(event) {
@@ -180,6 +207,8 @@ function handleTouchMove(event) {
 }
 
 
+
+
 function handleTouchEnd(event) {
     event.preventDefault();
     if (isSelecting) {
@@ -190,6 +219,8 @@ function handleTouchEnd(event) {
         }
     }
 }
+
+
 
 
 function handleMouseDown(event) {
@@ -203,6 +234,8 @@ function handleMouseDown(event) {
 }
 
 
+
+
 function handleMouseUp(event) {
     if (isSelecting) {
         isSelecting = false;
@@ -214,6 +247,8 @@ function handleMouseUp(event) {
 }
 
 
+
+
 function handleMouseOver(event) {
     if (isSelecting && event.target.tagName === 'TD') {
         currentCell = event.target;
@@ -222,8 +257,12 @@ function handleMouseOver(event) {
 }
 
 
+
+
 function updateSelection() {
     if (!startCell || !currentCell) return;
+
+
 
 
     lastHighlightedCells.forEach(cell => {
@@ -232,20 +271,28 @@ function updateSelection() {
     lastHighlightedCells.clear();
 
 
+
+
     const startRow = parseInt(startCell.dataset.row);
     const startCol = parseInt(startCell.dataset.col);
     const endRow = parseInt(currentCell.dataset.row);
     const endCol = parseInt(currentCell.dataset.col);
 
 
+
+
     const rowDiff = endRow - startRow;
     const colDiff = endCol - startCol;
+
+
 
 
     if (Math.abs(rowDiff) === Math.abs(colDiff) || rowDiff === 0 || colDiff === 0) {
         const steps = Math.max(Math.abs(rowDiff), Math.abs(colDiff));
         const rowStep = steps === 0 ? 0 : rowDiff / steps;
         const colStep = steps === 0 ? 0 : colDiff / steps;
+
+
 
 
         for (let i = 0; i <= steps; i++) {
@@ -261,6 +308,8 @@ function updateSelection() {
 }
 
 
+
+
 function getSelectedWord() {
     const cells = Array.from(lastHighlightedCells);
     cells.sort((a, b) => {
@@ -269,6 +318,8 @@ function getSelectedWord() {
     });
     return cells.map(cell => cell.textContent).join('');
 }
+
+
 
 
 function checkSelection() {
@@ -290,7 +341,8 @@ function checkSelection() {
 
 
         if (foundWords.size === words.length) {
-            updateMessage("Parabéns! Você encontrou todas as palavras!");
+            showVictoryPopup();
+            disableGameBoard();
         }
         return true;
     }
@@ -298,11 +350,85 @@ function checkSelection() {
 }
 
 
+function showVictoryPopup() {
+    const popup = document.createElement('div');
+    popup.className = 'victory-popup';
+   
+    const content = document.createElement('div');
+    content.className = 'victory-content';
+   
+    const title = document.createElement('h2');
+    title.textContent = 'Parabéns!';
+   
+    const message = document.createElement('p');
+    message.textContent = 'Você encontrou todas as palavras!';
+   
+    const menuButton = document.createElement('button');
+    menuButton.textContent = 'Voltar ao Menu';
+    menuButton.onclick = () => {
+        document.body.removeChild(popup);
+        showInitialScreen();
+    };
+   
+    content.appendChild(title);
+    content.appendChild(message);
+    content.appendChild(menuButton);
+    popup.appendChild(content);
+   
+    document.body.appendChild(popup);
+}
+
+
+function disableGameBoard() {
+    const table = document.getElementById('crossword');
+   
+    // Remove event listeners
+    table.removeEventListener('mousedown', handleMouseDown);
+    table.removeEventListener('touchstart', handleTouchStart);
+    document.removeEventListener('mouseup', handleMouseUp);
+    document.removeEventListener('touchend', handleTouchEnd);
+    table.removeEventListener('mouseover', handleMouseOver);
+    document.removeEventListener('touchmove', handleTouchMove);
+   
+    // Add a visual indication that the board is disabled
+    table.style.opacity = '0.8';
+    table.style.pointerEvents = 'none';
+}
+
+
+
+
+
+
+function reiniciarJogo() {
+    // Remove any existing popup
+    const existingPopup = document.querySelector('.victory-popup');
+    if (existingPopup) {
+        document.body.removeChild(existingPopup);
+    }
+   
+    // Reset the game board opacity and pointer events
+    const table = document.getElementById('crossword');
+    table.style.opacity = '1';
+    table.style.pointerEvents = 'auto';
+   
+    // Reset message
+    updateMessage("Selecione as palavras na grade!");
+   
+    // Initialize new game
+    initializeGame();
+}
+
+
+
+
 function isWordFound() {
     const selectedWord = getSelectedWord();
     const reversedWord = selectedWord.split('').reverse().join('');
     return words.includes(selectedWord) || words.includes(reversedWord);
 }
+
+
 
 
 function clearSelection() {
@@ -313,6 +439,8 @@ function clearSelection() {
     });
     lastHighlightedCells.clear();
 }
+
+
 
 
 function updateWordList() {
@@ -329,10 +457,14 @@ function updateWordList() {
 }
 
 
+
+
 function updateMessage(message) {
     const messageDiv = document.getElementById('message');
     messageDiv.textContent = message;
 }
+
+
 
 
 function highlightCell(cell) {
@@ -343,10 +475,17 @@ function highlightCell(cell) {
 }
 
 
+
+
+
+
 function showInitialScreen() {
     const initialScreen = document.getElementById('initial-screen');
     const gameScreen = document.getElementById('game-screen');
     const instructionsScreen = document.getElementById('instructions-screen');
+   
+    // Reset message when returning to initial screen
+    updateMessage("Selecione as palavras na grade!");
    
     initialScreen.classList.remove('hidden');
     gameScreen.classList.add('hidden');
@@ -359,11 +498,23 @@ function showGameScreen() {
     const gameScreen = document.getElementById('game-screen');
     const instructionsScreen = document.getElementById('instructions-screen');
    
+    // Reset message when starting new game
+    updateMessage("Selecione as palavras na grade!");
+   
     initialScreen.classList.add('hidden');
     gameScreen.classList.remove('hidden');
     instructionsScreen.classList.add('hidden');
     initializeGame();
 }
+
+
+function reiniciarJogo() {
+    // Reset message when restarting game
+    updateMessage("Selecione as palavras na grade!");
+    initializeGame();
+}
+
+
 
 
 function showInstructionsScreen() {
@@ -377,15 +528,17 @@ function showInstructionsScreen() {
 }
 
 
-function reiniciarJogo() {
-    initializeGame();
-    document.getElementById('message').textContent = "Selecione as palavras na grade!";
-}
+
+
+
+
 
 
 function renderGrid() {
     const table = document.getElementById('crossword');
     table.innerHTML = '';
+
+
 
 
     table.removeEventListener('mousedown', handleMouseDown);
@@ -394,6 +547,8 @@ function renderGrid() {
     document.removeEventListener('touchend', handleTouchEnd);
     table.removeEventListener('mouseover', handleMouseOver);
     document.removeEventListener('touchmove', handleTouchMove);
+
+
 
 
     table.addEventListener('mousedown', handleMouseDown);
@@ -405,9 +560,13 @@ function renderGrid() {
     table.addEventListener('selectstart', (e) => e.preventDefault());
 
 
+
+
     table.addEventListener('gesturestart', (e) => e.preventDefault());
     table.addEventListener('gesturechange', (e) => e.preventDefault());
     table.addEventListener('gestureend', (e) => e.preventDefault());
+
+
 
 
     for (let i = 0; i < 13; i++) {
@@ -424,11 +583,15 @@ function renderGrid() {
 }
 
 
+
+
 document.addEventListener('DOMContentLoaded', () => {
     const gameScreen = document.getElementById('game-screen');
     gameScreen.addEventListener('touchmove', (e) => {
         e.preventDefault();
     }, { passive: false });
+
+
 
 
     const startGameButton = document.getElementById('start-game');
@@ -437,7 +600,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const voltarButton = document.getElementById('voltar');
 
 
+
+
     instructionsButton.textContent = "Instruções";
+
+
 
 
     startGameButton.addEventListener('click', showGameScreen);
@@ -445,4 +612,9 @@ document.addEventListener('DOMContentLoaded', () => {
     backToMenuButton.addEventListener('click', showInitialScreen);
     voltarButton.addEventListener('click', showInitialScreen);
 });
+
+
+
+
+
 
